@@ -15,7 +15,6 @@ services:
       dockerfile: docker/prod.Dockerfile
     environment:
       APP_DB_HOST: db
-      APP_DB_NAME: linkedin
     restart: always
     ports:
       - 8001:8000
