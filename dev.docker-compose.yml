@@ -3,7 +3,6 @@ services:
   db:
     image: postgres:11.1
     restart: always
-    container_name: k0d-db
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
@@ -13,7 +12,7 @@ services:
 
   linkedin:
     build:
-      context: linkedin
+      context: .
       dockerfile: docker/dev.Dockerfile
     environment:
       APP_DB_HOST: db
@@ -23,7 +22,7 @@ services:
     ports:
       - 8000:8000
     volumes:
-    - ./linkedin/src/:/opt/application
+    - ./src/:/opt/application
 
 volumes:
   db-data: {}

@@ -14,10 +14,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static")
-]
-
 DATABASES = {
     'default': {
         'ENGINE': e("APP_DATABASES_ENGINE") or 'django.db.backends.postgresql',

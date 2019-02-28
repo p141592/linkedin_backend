@@ -11,9 +11,8 @@ services:
 
   linkedin:
     build:
-      context: linkedin
+      context: .
       dockerfile: docker/prod.Dockerfile
-    container_name: linkedin
     environment:
       APP_DB_HOST: db
       APP_DB_NAME: linkedin
