@@ -1,0 +1,29 @@
+version: '3.1'
+services:
+  db:
+    image: postgres:11.1
+    restart: always
+    container_name: k0d-db
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+    volumes:
+    - db-data:/var/lib/postgresql/data
+
+
+  linkedin:
+    build:
+      context: linkedin
+      dockerfile: docker/dev.Dockerfile
+    environment:
+      APP_DB_HOST: db
+      APP_DB_NAME: postgres
+    depends_on:
+      - db
+    ports:
+      - 8000:8000
+    volumes:
+    - ./linkedin/src/:/opt/application
+
+volumes:
+  db-data: {}

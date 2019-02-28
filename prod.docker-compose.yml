@@ -1,0 +1,32 @@
+version: '3.2'
+services:
+  db:
+    image: postgres:11.1
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+    volumes:
+    - db-data:/var/lib/postgresql/data
+
+  linkedin:
+    build:
+      context: linkedin
+      dockerfile: docker/prod.Dockerfile
+    container_name: linkedin
+    environment:
+      APP_DB_HOST: db
+      APP_DB_NAME: linkedin
+    restart: always
+    ports:
+      - 8001:8000
+    depends_on:
+      - db
+    volumes:
+      - type: bind
+        source: /opt/application/linkedin_backend/.git
+        target: /opt/application/.git
+
+
+volumes:
+  db-data: {}
