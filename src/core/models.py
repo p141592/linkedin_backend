@@ -4,21 +4,54 @@ from django.db import models
 from django.utils import timezone
 
 
-class Network(models.Model):
-    network = models.IntegerField(default=0)
+class Campaign(models.Model):
+    """Компания пользователя"""
+    id = models.CharField(max_length=255, default=uuid.uuid1, primary_key=True)
+    user = models.CharField(max_length=255)
+    title = models.CharField(max_length=255)
     date = models.DateTimeField(default=timezone.now)
 
-    def __str__(self):
-        return str(self.network)
+    class Meta:
+        ordering = ['-date']
+
+
+class Filter(models.Model):
+    """Фильтры аудитории"""
+    user = models.CharField()
+    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE)
+    date = models.DateTimeField(default=timezone.now)
 
 
 class Contact(models.Model):
+    id = models.CharField(max_length=255)
+    firstName = models.CharField(max_length=255)
+    lastName = models.CharField(max_length=255)
+    occupation = models.CharField(max_length=255)
+    entityUrn = models.CharField(max_length=255)
+    email = models.EmailField()
+
+
+class Posts(models.Model):
+    """Посты пользователей"""
+
+
+class Skills(models.Model):
+    """Скилы пользователей"""
+
+
+class University(models.Model):
+    """Университет"""
+
+
+class Recommendation(models.Model):
+    """Рекомендации"""
+
+
+class Relationship(models.Model):
     id = models.CharField(max_length=255, primary_key=True)
-    invite = models.BooleanField(default=False)
-    name = models.CharField(max_length=255)
-    mutual_contacts = models.IntegerField(default=0)
-    picture = models.URLField(null=True)
-    position = models.CharField(max_length=255)
+    owner = models.ForeignKey(Campaign, on_delete=models.SET_NULL)
+    user = models.CharField(max_length=255)
+    contact = models.ForeignKey(Contact)
     date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
